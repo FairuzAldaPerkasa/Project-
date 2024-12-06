@@ -7,11 +7,18 @@ const Users = db.define('users',{
     name:{
         type:DataTypes.STRING
     },
-    email:{
+    phone:{
         type:DataTypes.STRING
     },
     password:{
         type:DataTypes.STRING
+    },
+    confPassword:{
+        type:DataTypes.STRING
+    },
+    profile_photo:{
+        type:DataTypes.STRING,
+        allowNull: true
     },
     refresh_token:{
         type:DataTypes.TEXT

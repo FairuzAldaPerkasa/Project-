@@ -1,0 +1,15 @@
+runtime: nodejs18
+
+env: flex
+
+entrypoint: node index.js
+
+env_variables:
+  NODE_ENV: "production"
+
+handlers:
+  - url: /uploads
+    static_dir: uploads
+
+  - url: /.* 
+    script: auto

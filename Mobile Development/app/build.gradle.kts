@@ -55,4 +55,14 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.glide)
 
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    implementation (libs.squareup.okhttp)
+    implementation (libs.logging.interceptor)
+
+    implementation(libs.play.services.location)
+
+
+
 }

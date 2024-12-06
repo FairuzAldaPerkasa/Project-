@@ -5,7 +5,7 @@ import { where } from "sequelize";
 export const getUsers = async(req, res) => {
     try {
         const users = await Users.findAll({
-            attributes:['id','name','email']
+            attributes:['id','name','phone']
         });
         
         res.json(users);
@@ -15,20 +15,25 @@ export const getUsers = async(req, res) => {
 }
 
 export const Register = async(req, res) => {
-    const {name, email, password, confPassword} = req.body;
+    console.log('Request body:', req.body);
+
+    const {name, phone, password, confPassword} = req.body;
     if(password != confPassword) return res.status(400).json({msg:"PAssword dan confirm tidak coocok"});
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
+    const hashConfPassword = await bcrypt.hash(confPassword, salt);
     try {
         await Users.create({
             name: name,
-            email:email,
-            password:hashPassword
+            phone:phone,
+            password:hashPassword,
+            confPassword:hashConfPassword,
         });
         res.json({msg:"Register Berhasil"});
 
     } catch(error) {
         console.log(error);
+        res.status(500).json({ msg: "Server error" });
     }
 }
 
@@ -36,18 +41,18 @@ export const Login = async(req, res) => {
     try {
         const user = await Users.findAll({
             where:{
-                email:req.body.email
+                email:req.body.phone
             }
         });
         const match = await bcrypt.compare(req.body.password, user[0].password);
         if(!match) return res.status(400).json({msg:"wrong password"});
         const userId = user[0].id;
         const name = user[0].name;
-        const email = user[0].email;
-        const accessToken = jwt.sign({userId, name, email}, process.env.ACCESS_TOKEN_SECRET,{
+        const phone = user[0].phone;
+        const accessToken = jwt.sign({userId, name, phone}, process.env.ACCESS_TOKEN_SECRET,{
             expiresIn:'20s'
         });
-        const refreshToken = jwt.sign({userId, name, email}, process.env.REFRESH_TOKEN_SECRET,{
+        const refreshToken = jwt.sign({userId, name, phone}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn:'1d'
         });
         await Users.update({refresh_token: refreshToken},{

@@ -1,0 +1,34 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Dependency directories
+.pnp/
+.pnp.js
+
+# Build output
+/dist
+/build
+
+# Docker files
+# Dockerfile
+# .dockerignore
+
+# Environment variables
+.env
+
+# IDE and editor directories
+.vscode/
+.idea/
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+uploads/

@@ -5,11 +5,11 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="aksi_notifikasi">Notifikasi</string>
 
     <string name="menu_rumah">Rumah</string>
     <string name="menu_komunitas">Komunitas</string>
     <string name="menu_editprofil">Edit Profil</string>
-    <string name="nama">name</string>
-    <string name="deskripsi">deskripsi</string>
+    <string name="nama">Name</string>
+    <string name="deskripsi">Deskripsi</string>
 </resources>
