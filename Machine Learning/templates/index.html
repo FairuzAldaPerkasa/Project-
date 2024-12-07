@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediksi Kondisi</title>
+</head>
+<body>
+    <h1>Prediksi Kondisi</h1>
+    <form method="POST">
+        <div>
+            <label for="Tn">Tn:</label>
+            <input type="number" name="Tn" required>
+        </div>
+        <div>
+            <label for="Tx">Tx:</label>
+            <input type="number" name="Tx" required>
+        </div>
+        <div>
+            <label for="Tavg">Tavg:</label>
+            <input type="number" name="Tavg" required>
+        </div>
+        <div>
+            <label for="RH_avg">RH_avg:</label>
+            <input type="number" name="RH_avg" required>
+        </div>
+        <div>
+            <label for="ff_avg">ff_avg:</label>
+            <input type="number" name="ff_avg" required>
+        </div>
+        <button type="submit">Prediksi</button>
+    </form>
+
+    {% if prediction %}
+        <h2>Hasil Prediksi: {{ prediction }}</h2>
+        <h3>Nilai rad(m): {{ rad }}</h3>
+        <h3>Data Input:</h3>
+        <ul>
+            {% for key, value in data.items() %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
