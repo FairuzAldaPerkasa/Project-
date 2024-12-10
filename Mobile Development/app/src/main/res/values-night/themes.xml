@@ -1,22 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme (Day mode). -->
     <style name="Theme.MelautApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color for day and night -->
+        <!-- Primary brand color for day -->
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryVariant">@color/blue_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color for day and night -->
+        <!-- Secondary brand color for day -->
         <item name="colorSecondary">@color/blue_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-        <!-- Night mode adjustments -->
+        <!-- Adjustments for Day mode -->
         <item name="android:windowBackground">@color/black</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/gray_500</item>
         <item name="colorSurface">@color/blue_700</item>
         <item name="colorOnSurface">@color/white</item>
+
+        <!-- Remove action bar background and shadow -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
     <!-- Night Theme -->
@@ -37,6 +43,18 @@
         <item name="android:textColorSecondary">@color/gray_500</item>
         <item name="colorSurface">@color/blue_700</item>
         <item name="colorOnSurface">@color/white</item>
+
+        <!-- Remove action bar background and shadow for Night mode -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <!-- Style to remove shadow and background for the action bar -->
+    <style name="ActionBarStyle" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:elevation">0dp</item> <!-- Remove shadow -->
+        <item name="android:background">@android:color/transparent</item> <!-- Make the background transparent -->
     </style>
 
     <style name="Theme.MelautApp.NoActionBar">
@@ -47,6 +65,5 @@
     </style>
 
     <style name="Theme.MelautApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.MelautApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

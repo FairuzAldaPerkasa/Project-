@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,6 +64,9 @@ dependencies {
     implementation (libs.logging.interceptor)
 
     implementation(libs.play.services.location)
+   // implementation ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
+    implementation (libs.androidx.constraintlayout.v214)
 
 
 

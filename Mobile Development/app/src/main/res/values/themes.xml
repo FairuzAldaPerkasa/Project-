@@ -10,7 +10,18 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <!-- Remove action bar background and elevation -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <!-- Style to remove shadow and background for the action bar -->
+    <style name="ActionBarStyle" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:elevation">0dp</item> <!-- Remove shadow -->
+        <item name="android:background">@android:color/transparent</item> <!-- Make the background transparent -->
     </style>
 
     <style name="Theme.MelautApp.NoActionBar">
@@ -21,6 +32,5 @@
     </style>
 
     <style name="Theme.MelautApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.MelautApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

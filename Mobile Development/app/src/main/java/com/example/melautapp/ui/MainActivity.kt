@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Hide the title
+
+        // Make toolbar transparent and remove shadow
+        binding.appBarMain.toolbar.setBackgroundColor(android.graphics.Color.TRANSPARENT) // Remove white background
+        binding.appBarMain.toolbar.elevation = 0f // Remove shadow
 
         window.apply {
             // Atur status bar agar transparan
@@ -53,8 +58,6 @@ class MainActivity : AppCompatActivity() {
             .into(profileCircleImageView)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_rumah, R.id.nav_komunitas, R.id.nav_editprofil
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

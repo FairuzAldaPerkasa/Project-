@@ -6,8 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    //link api
-    private const val BASE_URL = "https://ibnux.github.io/BMKG-importer/cuaca/"
+    private const val BASE_URL = "https://backend-melaut-276667022964.asia-southeast2.run.app/"
 
     fun getApiService(): WeatherService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
