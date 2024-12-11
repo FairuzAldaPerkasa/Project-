@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id ("kotlin-parcelize")
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -27,20 +28,23 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-
+    // AndroidX Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -54,20 +58,21 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Image loading and other libraries
     implementation(libs.circleimageview)
     implementation(libs.glide)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.squareup.okhttp)
+    implementation(libs.logging.interceptor)
 
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-
-    implementation (libs.squareup.okhttp)
-    implementation (libs.logging.interceptor)
-
+    // Google Play Services
     implementation(libs.play.services.location)
-   // implementation ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 
-    implementation (libs.androidx.constraintlayout.v214)
+    // Room Database dependencies
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.room.compiler)
 
-
+    implementation(libs.osmdroid.android)
 
 }

@@ -27,7 +27,11 @@ data class LocationResponse(
 	val windSpeed: Double,
 
 	@field:SerializedName("pressure")
-	val pressure: Int
+	val pressure: Int,
+
+	@field:SerializedName("iconUrl")
+	val iconUrl: String
+
 ) : Parcelable {
 	constructor(parcel: Parcel) : this(
 		parcel.readString() ?: "",
@@ -37,7 +41,8 @@ data class LocationResponse(
 		parcel.readInt(),
 		parcel.readString() ?: "",
 		parcel.readDouble(),
-		parcel.readInt()
+		parcel.readInt(),
+		parcel.readString() ?: ""
 	)
 
 	override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -49,6 +54,7 @@ data class LocationResponse(
 		parcel.writeString(weather)
 		parcel.writeDouble(windSpeed)
 		parcel.writeInt(pressure)
+		parcel.writeString(iconUrl)
 	}
 
 	override fun describeContents(): Int = 0
