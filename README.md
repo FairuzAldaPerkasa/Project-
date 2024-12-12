@@ -22,6 +22,10 @@ Apk file for app installation can be found on our latest release [here](https://
 - Project Brief : [Our Project Brief Here](https://docs.google.com/document/d/1gASbRJX_Su7x4LbRqxHuTS7EPDRa__R5biFOaB99GEM/edit?tab=t.0)
 - Final presentation : [Our Presentation Slide Here](https://www.canva.com/design/DAGZAOMAIYY/5ft42ep6SB-tBY4e1t7cng/edit?utm_content=DAGZAOMAIYY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
+## Dataset Source:
+- Tidal Data : [Tidal Dataset](http://ioc-sealevelmonitoring.org)
+- Weather Data : [Weather Dataset](https://dataonline.bmkg.go.id/home)
+
 ## Capstone Project Team: 
 | Name | Bangkit-ID | Github-Profile | Task | Progress On Task |
 | ------ | ------ | ------ | ------ | ------ |
