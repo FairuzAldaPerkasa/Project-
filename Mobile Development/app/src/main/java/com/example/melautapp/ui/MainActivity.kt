@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -25,6 +26,7 @@ import com.example.melautapp.databinding.ActivityMainBinding
 import com.example.melautapp.ui.register.AuthService
 import com.google.firebase.auth.FirebaseUser
 import dataStore
+import com.google.android.material.appbar.AppBarLayout
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -110,9 +112,22 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_rumah, R.id.nav_komunitas, R.id.nav_editprofil
+                R.id.nav_rumah, R.id.nav_editprofil
             ), drawerLayout
         )
+
+        // Initialize ActionBar, even if we don't use it for visual display
+        setSupportActionBar(binding.appBarMain.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // Hide title
+
+        // Set up ActionBarDrawerToggle for the hamburger icon
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, binding.appBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        // Set up Navigation UI
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

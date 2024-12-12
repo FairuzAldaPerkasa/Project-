@@ -8,4 +8,5 @@
     <color name="gray_500">#757575</color> <!-- Complementary color 3 -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#D23232</color>
 </resources>

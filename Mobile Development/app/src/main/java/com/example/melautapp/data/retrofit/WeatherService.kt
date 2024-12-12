@@ -1,32 +1,29 @@
-package com.example.melautapp.data.retrofit
-
 import com.example.melautapp.data.response.LocationResponse
 import com.example.melautapp.data.response.ResultResponse
-import retrofit2.Call
+import com.example.melautapp.data.retrofit.ResultRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.Response
 
 interface WeatherService {
     @GET("weather")
-    fun getLocation(
+    suspend fun getLocation(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double
-    ): Call<LocationResponse>
+    ): Response<LocationResponse> // Return Response instead of Call
 
     @POST("result")
-    fun postResult(
+    suspend fun postResult(
         @Body request: ResultRequest
-    ): Call<ResultResponse>
+    ): Response<ResultResponse> // Menggunakan @Body untuk mengirimkan lat dan lon
 
-    // Add a method for fetching the ResultResponse directly, if applicable
+
     @GET("result")
-    fun getPredictionResult(
-        @Query("lat") lat: Double,
+    suspend fun getPredictionResult(
+        @Query("lat") lat: ResultRequest,
         @Query("lon") lon: Double
-    ): Call<ResultResponse> // Adjust this endpoint based on your API
+    ): Response<ResultResponse> // Return Response instead of Call
+
 }
-
-
-

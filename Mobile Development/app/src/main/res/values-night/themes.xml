@@ -64,6 +64,4 @@
         <item name="windowActionModeOverlay">false</item>
     </style>
 
-    <style name="Theme.MelautApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.MelautApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

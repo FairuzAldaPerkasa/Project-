@@ -1,15 +1,14 @@
 package com.example.melautapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.melautapp.R
 import com.example.melautapp.data.response.LocationResponse
 import com.example.melautapp.databinding.FragmentDetailSuhuBinding
+import com.example.melautapp.ui.MainViewModel
 
 @Suppress("DEPRECATION")
 class DetailSuhuFragment : Fragment() {
@@ -17,7 +16,7 @@ class DetailSuhuFragment : Fragment() {
     private var _binding: FragmentDetailSuhuBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var locationViewModel: LocationViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +26,10 @@ class DetailSuhuFragment : Fragment() {
         _binding = FragmentDetailSuhuBinding.inflate(inflater, container, false)
 
         // Initialize the ViewModel
-        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         // Observe location data from ViewModel
-        locationViewModel.locationData.observe(viewLifecycleOwner, { locationData ->
+        mainViewModel.locationResponse.observe(viewLifecycleOwner, { locationData ->
             updateUiWithLocationData(locationData)
         })
 
