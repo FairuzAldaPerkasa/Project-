@@ -1,5 +1,6 @@
 package com.example.melautapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,19 +12,18 @@ import com.example.melautapp.databinding.FragmentSuhuBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.example.melautapp.ui.MainViewModel
+
 class SuhuFragment : Fragment() {
 
     private var _binding: FragmentSuhuBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Retrieve location data from saved instance state if available
-        if (savedInstanceState != null) {
-            val locationData = savedInstanceState.getParcelable<LocationResponse>("location_data")
-            updateUiWithLocationData(locationData)
-        }
-    }
+    private lateinit var mainViewModel: MainViewModel
+
+    // In SuhuFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,52 +31,38 @@ class SuhuFragment : Fragment() {
     ): View {
         _binding = FragmentSuhuBinding.inflate(inflater, container, false)
 
-        // Retrieve location data either from arguments or savedInstanceState
-        val locationData = savedInstanceState?.getParcelable<LocationResponse>("location_data")
-            ?: arguments?.getParcelable("location_data")
-        updateUiWithLocationData(locationData)
+        // Initialize the ViewModel
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        // Observe location data from ViewModel
+        mainViewModel.locationResponse.observe(viewLifecycleOwner, { locationData ->
+            updateUiWithLocationData(locationData)
+        })
 
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUiWithLocationData(locationData: LocationResponse?) {
         if (locationData != null) {
-            // Display location
-            binding.tvLocation.text = "${locationData.kota}, ${locationData.propinsi}"
-            // Display current date
+            binding.tvLocation.text = locationData.location
             binding.tvDate.text = SimpleDateFormat("EEE, MMM dd", Locale.getDefault()).format(Date())
-
-            // Example: Fetching temperature and weather data
-            val temperature = "25°C"  // Ideally, get this data from a weather API or repository
-            val weatherStatus = "Cerah" // Similarly, this should come from a weather API
-            val weatherIconRes = R.drawable.ic_weather_cloudy // Weather icon resource
-
-            // Update UI with dynamic data
-            binding.tvTemperature.text = temperature
-            binding.tvWeatherStatus.text = weatherStatus
-            binding.ivWeatherIcon.setImageResource(weatherIconRes)
+            binding.tvTemperature.text = "${locationData.temperature}°C"
+            binding.tvWeatherStatus.text = locationData.weather
+            // Set weather icon dynamically based on weather status
+            binding.tvWeatherStatus.text = locationData.weather
+            // Set weather icon dynamically based on weather status
+            Glide.with(binding.ivWeatherIcon.context)
+                .load(locationData.iconUrl) // URL gambar
+                .placeholder(R.drawable.placeholder_icon) // Ikon placeholder saat memuat
+                .error(R.drawable.error_icon) // Ikon jika gagal memuat
+                .into(binding.ivWeatherIcon)
         } else {
-            // If no location data is available, display a fallback message
+            // Fallback if no location data is available
             binding.tvLocation.text = "Lokasi tidak tersedia"
-            binding.tvTemperature.text = "--°C"  // Indicating no temperature data
-            binding.tvWeatherStatus.text = "Tidak diketahui"  // Indicating unknown weather status
-            binding.ivWeatherIcon.setImageResource(R.drawable.ic_weather_cloudy)  // Fallback icon
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        val locationData = arguments?.getParcelable<LocationResponse>("location_data")
-        outState.putParcelable("location_data", locationData)
-    }
-
-    companion object {
-        fun newInstance(locationData: LocationResponse): SuhuFragment {
-            val fragment = SuhuFragment()
-            val args = Bundle()
-            args.putParcelable("location_data", locationData)
-            fragment.arguments = args
-            return fragment
+            binding.tvTemperature.text = "--°C"
+            binding.tvWeatherStatus.text = "Tidak diketahui"
+            binding.ivWeatherIcon.setImageResource(R.drawable.default_icon)
         }
     }
 

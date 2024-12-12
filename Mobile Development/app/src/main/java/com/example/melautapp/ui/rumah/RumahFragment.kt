@@ -1,24 +1,30 @@
 package com.example.melautapp.ui.rumah
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.melautapp.data.response.LocationResponse
 import com.example.melautapp.data.retrofit.ApiConfig
 import com.example.melautapp.databinding.FragmentRumahBinding
+import com.example.melautapp.ui.DetailPrediksi
+import com.example.melautapp.ui.DetailSuhuFragment
+import com.example.melautapp.ui.MainViewModel
+import com.example.melautapp.ui.MapsFragment
 import com.example.melautapp.ui.SuhuFragment
 import com.google.android.gms.location.*
-import retrofit2.Call
-import retrofit2.Callback
+import kotlinx.coroutines.launch
 import retrofit2.Response
-
 class RumahFragment : Fragment() {
 
     private var _binding: FragmentRumahBinding? = null
@@ -27,6 +33,7 @@ class RumahFragment : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var isLocationFetched = false
     private lateinit var locationCallback: LocationCallback
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +41,13 @@ class RumahFragment : Fragment() {
     ): View {
         _binding = FragmentRumahBinding.inflate(inflater, container, false)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         initUI()
         checkPermissionsAndFetchLocation()
+
+        // Add fragments to their containers
+        loadFragments()
 
         return binding.root
     }
@@ -79,11 +90,12 @@ class RumahFragment : Fragment() {
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         if (requestCode == 100) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 checkPermissionsAndFetchLocation()
             } else {
-                binding.textRumah.text = "Akses lokasi ditolak."
+                binding.textRumah.text = "Akses lokasi ditolak. Harap izinkan akses lokasi untuk melanjutkan."
             }
         }
     }
@@ -94,102 +106,135 @@ class RumahFragment : Fragment() {
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
-    @SuppressLint("MissingPermission")
     private fun fetchCurrentLocation() {
-        val locationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 5000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-
-        binding.progressBar.visibility = View.VISIBLE
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                p0?.let { result ->
-                    if (result.locations.isNotEmpty()) {
-                        val location = result.locations[0]
-                        val lat = location.latitude
-                        val lon = location.longitude
-                        fetchLocationData(lat.toString(), lon.toString())
-                        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-                        isLocationFetched = true
-                        binding.progressBar.visibility = View.GONE
-                    }
-                }
-            }
-        }
-
-        fusedLocationProviderClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            null
-        )
-    }
-
-    private fun fetchLocationData(lat: String, lon: String) {
-        binding.progressBar.visibility = View.VISIBLE
-        val apiService = ApiConfig.getApiService()
-        apiService.getLocations().enqueue(object : Callback<List<LocationResponse>> {
-            override fun onResponse(
-                call: Call<List<LocationResponse>>,
-                response: Response<List<LocationResponse>>
-            ) {
-                binding.progressBar.visibility = View.GONE
-                if (response.isSuccessful) {
-                    processLocationData(lat.toDouble(), lon.toDouble(), response.body())
-                } else {
-                    binding.textRumah.text = "Gagal mengambil data lokasi."
-                }
-            }
-
-            override fun onFailure(call: Call<List<LocationResponse>>, t: Throwable) {
-                binding.progressBar.visibility = View.GONE
-                binding.textRumah.text = "Kesalahan jaringan: ${t.localizedMessage}"
-            }
-        })
-    }
-
-    private fun processLocationData(
-        lat: Double,
-        lon: Double,
-        locations: List<LocationResponse>?
-    ) {
-        if (locations.isNullOrEmpty()) {
-            binding.textRumah.text = "Tidak ada data lokasi yang tersedia."
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
 
-        val closestLocation = locations.minByOrNull { location ->
-            val latDiff = Math.abs(lat - (location.lat?.toDouble() ?: 0.0))
-            val lonDiff = Math.abs(lon - (location.lon?.toDouble() ?: 0.0))
-            latDiff + lonDiff
+        fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val location = task.result
+                if (location != null) {
+                    val lat = location.latitude
+                    val lon = location.longitude
+                    displayLocation(lat, lon)
+                } else {
+                    getLastKnownLocation()
+                }
+            } else {
+                Log.e("LocationError", "Error fetching last location: ${task.exception?.localizedMessage}")
+                binding.textRumah.text = "Gagal mengambil lokasi."
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+    }
+
+
+    private fun getLastKnownLocation() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = 5000
+            fastestInterval = 2000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
-        requireActivity().runOnUiThread {
-            closestLocation?.let {
-                binding.textRumah.text = """
-                ID: ${it.id}
-                Provinsi: ${it.propinsi}
-                Kota: ${it.kota}
-                Kecamatan: ${it.kecamatan}
-                Latitude: ${it.lat}
-                Longitude: ${it.lon}
-            """.trimIndent()
-
-                // Create an instance of the SuhuFragment and pass location data
-                val suhuFragment = SuhuFragment.newInstance(it)
-
-                // Add SuhuFragment to the container directly (without replacing)
-                val fragmentContainer = binding.suhuFragmentContainer
-                if (fragmentContainer != null) {
-                    parentFragmentManager.beginTransaction()
-                        .add(fragmentContainer.id, suhuFragment)
-                        .commit()
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                locationResult.locations.firstOrNull()?.let { location ->
+                    val lat = location.latitude
+                    val lon = location.longitude
+                    displayLocation(lat, lon)
+                    fusedLocationProviderClient.removeLocationUpdates(locationCallback)
                 }
-            } ?: run {
-                binding.textRumah.text = "Tidak ditemukan lokasi terdekat."
             }
+        }
+
+        try {
+            fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+        } catch (e: SecurityException) {
+            Log.e("LocationError", "Permission issue: ${e.localizedMessage}")
+            binding.textRumah.text = "Permission denied."
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun displayLocation(lat: Double, lon: Double) {
+        Log.d("LocationInfo", "Latitude: $lat, Longitude: $lon")
+        binding.progressBar.visibility = View.GONE
+        loadFragments()
+        fetchWeatherData(lat, lon)
+
+        // Update ViewModel with coordinates
+        mainViewModel.setCoordinates(lat, lon)
+    }
+
+    private fun fetchWeatherData(lat: Double, lon: Double) {
+        val apiService = ApiConfig.getApiService()
+
+        // Launch coroutine to fetch weather data
+        lifecycleScope.launch {
+            try {
+                // Make the API call (using suspend function)
+                val response = apiService.getLocation(lat, lon)
+
+                // Check if the response is successful
+                if (response.isSuccessful) {
+                    val locationResponse = response.body()
+                    if (locationResponse != null) {
+                        Log.d("WeatherResponse", "Location: ${locationResponse.location}")
+                        Log.d("WeatherResponse", "Temperature: ${locationResponse.temperature}°C")
+                        Log.d("WeatherResponse", "Weather: ${locationResponse.weather}")
+
+                        // Update the ViewModel with location and weather data
+                        mainViewModel.setLocationResponse(locationResponse)
+
+                    } else {
+                        Log.e("WeatherError", "Location response body is null.")
+                        binding.textRumah.text = "Tidak ada data cuaca yang ditemukan."
+                    }
+                } else {
+                    Log.e("WeatherError", "Failed to fetch weather data. Code: ${response.code()} - ${response.message()}")
+                    binding.textRumah.text = "Gagal mendapatkan data cuaca."
+                }
+            } catch (e: Exception) {
+                Log.e("WeatherError", "Error fetching weather data: ${e.localizedMessage}")
+                binding.textRumah.text = "Terjadi kesalahan saat mengambil data cuaca."
+            }
+        }
+    }
+
+    private fun loadFragments() {
+        // Only replace fragments if not already present
+        if (childFragmentManager.findFragmentByTag(SuhuFragment::class.java.simpleName) == null) {
+            val suhuFragment = SuhuFragment()
+            childFragmentManager.beginTransaction()
+                .replace(binding.suhuFragmentContainer.id, suhuFragment, SuhuFragment::class.java.simpleName)
+                .commit()
+        }
+
+        if (childFragmentManager.findFragmentByTag(MapsFragment::class.java.simpleName) == null) {
+            val mapsFragment = MapsFragment()
+            childFragmentManager.beginTransaction()
+                .replace(binding.mapsFragmentContainer.id, mapsFragment, MapsFragment::class.java.simpleName)
+                .commit()
+        }
+
+        if (childFragmentManager.findFragmentByTag(DetailSuhuFragment::class.java.simpleName) == null) {
+            val detailSuhuFragment = DetailSuhuFragment()
+            childFragmentManager.beginTransaction()
+                .replace(binding.detailSuhuFragmentContainer.id, detailSuhuFragment, DetailSuhuFragment::class.java.simpleName)
+                .commit()
         }
     }
 

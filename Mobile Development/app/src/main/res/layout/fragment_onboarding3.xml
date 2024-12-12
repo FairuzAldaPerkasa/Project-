@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F2F2"
+    tools:context="com.example.melaut.onboarding.Onboarding3Fragment">
+
+    <!-- Image Background -->
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/melaut3" />
+
+    <!-- Overlay Card -->
+    <RelativeLayout
+        android:id="@+id/overlayCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="100dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/card_background"
+        android:padding="16dp">
+
+        <!-- Title 1 -->
+        <TextView
+            android:id="@+id/titleText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/melaut1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_centerHorizontal="true" />
+
+        <!-- Title 2 -->
+        <TextView
+            android:id="@+id/titleText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleText1"
+            android:text="@string/sudah_siapkah_anda"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_centerHorizontal="true" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subtitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleText2"
+            android:layout_marginTop="8dp"
+            android:text="@string/bersama_melaut_temukan_waktu_terbaik_dan_lokasi_strategis_untuk_hasil_tangkapan_maksimal"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
+        <!-- Continue Button -->
+        <Button
+            android:id="@+id/continueButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subtitleText"
+            android:layout_marginTop="17dp"
+            android:paddingHorizontal="50dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_button"
+            android:text="@string/mulai_sekarang"
+            android:backgroundTint="#6E97FF"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+</RelativeLayout>
