@@ -35,4 +35,4 @@ Apk file for app installation can be found on our latest release [here](https://
 | Fara Azahwa | C179B4KX1392  | https://github.com/faraazahwa | Deploy backend Node JS, managing storage SQL Service and cloud bucket storage service | Done |
 | Selvie Purnama Dewi | C179B4KX4098  | https://github.com/sevinadewi | Build the node JS for the login and register backend. Build profile backend API. Get the realtime data weather API. Integrating the model from Machine Learning and deploy it  | Done |
 |  Intan Dewi Hapsari  | A179B4KX1984  | https://github.com/intandewihapsari | Build the main feature with retrofit as well as consume the model from CC's API. | Done |
-| Agil Miftahul Ulum  | A179B4KY0171   | https://github.com/Agilmf | Build the unboarding, and authentication pages such as login and register feature | Done |
+| Agil Miftahul Ulum  | A179B4KY0171   | https://github.com/Agilmf | Build the unboarding, and authentication pages such as login and register feature and edit profile | Done |
