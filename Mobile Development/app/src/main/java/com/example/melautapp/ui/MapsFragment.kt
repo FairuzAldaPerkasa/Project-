@@ -1,5 +1,6 @@
 package com.example.melautapp.ui
 
+import SavePreferences
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.melautapp.R
 import com.example.melautapp.databinding.FragmentMapsBinding
+import dataStore
+import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -21,6 +25,7 @@ class MapsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mainViewModel: MainViewModel
     private lateinit var map: MapView
+    private lateinit var savePreferences: SavePreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +38,12 @@ class MapsFragment : Fragment() {
 
         // Configure OSMDroid settings
         Configuration.getInstance().load(requireContext(), requireActivity().getPreferences(0))
+        savePreferences = SavePreferences.getInstance(requireActivity().dataStore)
+        viewLifecycleOwner.lifecycleScope.launch {
+            savePreferences.getusername().collect{
+                binding.textName.text=it
+            }
+        }
 
         // Set up the map
         map = binding.mapView

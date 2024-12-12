@@ -77,8 +77,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             lifecycleScope.launch {
                 savePreferences.getUserId().collect{ userID ->
-                    fetchProfileData(userID!!)
-                    userIdSaved = userID
+                    userIdSaved = userID!!
+                    if (userID != null) {
+                        userIdSaved = userID
+                        fetchProfileData(userID)
+                    }
                 }
             }
         }
@@ -98,10 +101,7 @@ class MainActivity : AppCompatActivity() {
                         android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         profileCircleImageView = navView.getHeaderView(0).findViewById(R.id.imageView)
@@ -146,6 +146,8 @@ class MainActivity : AppCompatActivity() {
                     val profile = response.body()
                     if (profile != null) {
                         namaSide.text = profile.name
+                        lifecycleScope.launch { savePreferences.saveusername(profile.name) }
+
                     }
                 } else {
                     Toast.makeText(this@MainActivity, "Failed to fetch profile", Toast.LENGTH_SHORT).show()

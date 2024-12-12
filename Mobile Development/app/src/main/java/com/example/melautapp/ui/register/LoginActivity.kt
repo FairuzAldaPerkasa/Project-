@@ -23,6 +23,7 @@ import com.example.melautapp.ui.MainActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -54,6 +55,8 @@ class LoginActivity : AppCompatActivity() {
 
         // Initialize SavePreferences using the DataStore from the context
         savePreferences = SavePreferences.getInstance(dataStore)
+
+
 
         auth = Firebase.auth
 

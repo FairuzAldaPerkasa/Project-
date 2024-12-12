@@ -15,12 +15,19 @@ class SavePreferences private constructor(private val dataStore: DataStore<Prefe
     private val isLoginKey = booleanPreferencesKey("is_login")
     private val tokenKey = stringPreferencesKey("token")
     private val userId = intPreferencesKey("user_id")
+    private val username = stringPreferencesKey("username")
 
     fun isLogin(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[isLoginKey] ?: false
         }
     }
+    fun getusername(): Flow<String?> {
+        return dataStore.data.map { preferences ->
+            preferences[username]
+        }
+    }
+
 
     fun getToken(): Flow<String?> {
         return dataStore.data.map { preferences ->
@@ -42,6 +49,11 @@ class SavePreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun saveToken(token: String) {
         dataStore.edit { preferences ->
             preferences[tokenKey] = token
+        }
+    }
+    suspend fun saveusername(name: String) {
+        dataStore.edit { preferences ->
+            preferences[username] = name
         }
     }
 
