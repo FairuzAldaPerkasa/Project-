@@ -1,10 +1,12 @@
 package com.example.melautapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.melautapp.R
 import com.example.melautapp.data.response.ResultResponse
 import com.example.melautapp.databinding.DetailPrediksiBinding
 
@@ -47,16 +49,48 @@ class DetailPrediksi : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun updateUiWithPredictionResult(result: ResultResponse?, lat: Double, lon: Double) {
         if (result != null) {
-            // Tampilkan hasil prediksi dengan benar
-            binding.textViewStatus.text = "Condition: ${result.predictedCondition} \nLatitude: $lat \nLongitude: $lon"
-            binding.textViewResult.text = "Predicted Radiation: ${result.predictedRad} \nLatitude: $lat \nLongitude: $lon"
+            val inputData = result.inputData
+
+            // Display input data and predicted results
+            binding.detailPrediksiLayout.setBackgroundColor(resources.getColor(R.color.blue_500, theme))
+            binding.textViewTn.text = "Tn (Min Temp): ${result.inputData.tn} \u00B0C"
+            binding.textViewTx.text = "Tx (Max Temp): ${result.inputData.tx} \u00B0C"
+            binding.textViewTavg.text = "Tavg (Avg Temp): ${result.inputData.tavg} \u00B0C"
+            binding.textViewRHAvg.text = "RH_avg (Avg Humidity): ${result.inputData.rHAvg}%"
+            binding.textViewFfAvg.text = "ff_avg (Avg Wind Speed): ${result.inputData.ffAvg} m/s"
+            binding.textViewPredictedCondition.text = "Predicted Condition: ${result.predictedCondition}"
+            binding.textViewPredictedRad.text = "Predicted Radar: ${result.predictedRad}"
+
+            // Show warning as a dialog if condition is unsafe
+            if (result.predictedCondition.lowercase() != "aman") {
+                showWarningDialog(result.predictedCondition)
+                binding.textViewTitle.setTextColor(resources.getColor(R.color.white,theme))
+                binding.detailPrediksiLayout.setBackgroundColor(resources.getColor(R.color.red, theme))
+                binding.buttonBack.setBackgroundColor(R.color.white)
+            }
         } else {
-            // Jika tidak ada hasil, tampilkan pesan
-            binding.textViewResult.text = "No result available \nLatitude: $lat \nLongitude: $lon"
-            binding.textViewStatus.text = "Unable to fetch prediction data \nLatitude: $lat \nLongitude: $lon"
+            // Display message if no result is available
+            binding.textViewTn.text = "Tn (Min Temp): --"
+            binding.textViewTx.text = "Tx (Max Temp): --"
+            binding.textViewTavg.text = "Tavg (Avg Temp): --"
+            binding.textViewRHAvg.text = "RH_avg (Avg Humidity): --"
+            binding.textViewFfAvg.text = "ff_avg (Avg Wind Speed): --"
+            binding.textViewPredictedCondition.text = "Predicted Condition: --"
+            binding.textViewPredictedRad.text = "Predicted Radiation: --"
         }
+    }
+
+    private fun showWarningDialog(condition: String) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle("Warning")
+        builder.setMessage("Unsafe condition detected: $condition. Please proceed with caution!")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
 
