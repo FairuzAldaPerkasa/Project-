@@ -1,4 +1,7 @@
-# Melaut README
+#<a href="https://git.io/typing-svg">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Melaut!&center=true&size=30">
+</a>
+
 <p align="center">
   <img src="https://github.com/FairuzAldaPerkasa/Project-Capstone/blob/main/app_readme.png">
 </p>
