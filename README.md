@@ -1,5 +1,5 @@
 <a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.herokuapp.com/?lines=Melaut&size=30">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Melaut&size=30&font=Fira+Code">
 </a>
 
 <p align="center">
