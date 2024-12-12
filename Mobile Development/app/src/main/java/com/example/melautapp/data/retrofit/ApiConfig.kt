@@ -24,4 +24,21 @@ object ApiConfig {
             .build()
             .create(WeatherService::class.java)
     }
+
+    fun getAuthService(): AuthenService {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+            .create(AuthenService::class.java)
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.melaut.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.melautapp.R
+import com.example.melautapp.ui.register.LoginActivity
 import com.google.android.material.textview.MaterialTextView
 
 class Onboarding2Fragment : Fragment() {
@@ -33,9 +35,8 @@ class Onboarding2Fragment : Fragment() {
 
         buttonSkip = view.findViewById(R.id.skipButton)
         buttonSkip.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.onBoardingContainer, Onboarding3Fragment())
-                .commit()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 

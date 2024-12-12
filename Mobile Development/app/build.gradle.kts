@@ -1,7 +1,10 @@
+import org.codehaus.groovy.transform.trait.Traits.Implemented
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id ("kotlin-parcelize")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -50,6 +53,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.maps)
+    implementation(libs.firebase.auth)
+    implementation(libs.googleid)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,9 +69,12 @@ dependencies {
     implementation (libs.logging.interceptor)
 
     implementation(libs.play.services.location)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
    // implementation ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 
     implementation (libs.androidx.constraintlayout.v214)
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-auth")
 
 
 

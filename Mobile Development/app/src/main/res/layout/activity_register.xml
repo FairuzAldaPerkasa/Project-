@@ -1,6 +1,7 @@
 <RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:id="@+id/main"
 
@@ -77,112 +78,100 @@
 
     <!-- Username Input -->
 
-    <!-- Label untuk EditText -->
-    <TextView
-        android:id="@+id/labelUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppinsbold"
-        android:layout_below="@id/TextView3"
-        android:text="@string/username"
-        android:textColor="#888888"
-        android:textSize="12sp"
-        android:layout_marginBottom="5dp" />
 
-    <!-- EditText untuk input -->
-    <EditText
-        android:id="@+id/username1"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/labelUsername"
-        android:hint="@string/masukan_username"
-        android:background="@drawable/rounded_edittext"
-        android:importantForAutofill="no"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#A9A9A9"
-        android:layout_marginTop="4dp" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TextView3"
+        android:hint="Nama"
+        android:layout_marginTop="4dp"
+        app:boxCornerRadiusBottomEnd="50dp"
+        app:boxCornerRadiusBottomStart="50dp"
+        app:boxCornerRadiusTopEnd="50dp"
+        app:boxCornerRadiusTopStart="50dp"
+        app:boxStrokeWidth="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username1"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <!-- Phone Number Input -->
 
     <!-- Label untuk Phone -->
-    <TextView
-        android:id="@+id/labelPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppinsbold"
-        android:text="@string/no_handphone"
-        android:textColor="#888888"
-        android:textSize="12sp"
-        android:layout_below="@id/username1"
-        android:layout_marginTop="12dp" />
-
     <!-- EditText untuk Phone -->
-    <EditText
-        android:id="@+id/phone1"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="@string/masukan_nohandphone"
-        android:importantForAutofill="no"
-        android:inputType="phone"
-        android:background="@drawable/rounded_edittext"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#A9A9A9"
-        android:layout_below="@id/labelPhone"
-        android:layout_marginTop="4dp" />
-
-
-    <!-- Label untuk Password -->
-    <TextView
-        android:id="@+id/labelPassword"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppinsbold"
-        android:text="@string/password"
-        android:textColor="#888888"
-        android:textSize="12sp"
-        android:layout_below="@id/phone1"
-        android:layout_marginTop="12dp" />
+        android:layout_below="@id/username_layout"
+        android:hint="No HandPhone"
+        android:layout_marginTop="16dp"
+        app:boxCornerRadiusBottomEnd="50dp"
+        app:boxCornerRadiusBottomStart="50dp"
+        app:boxCornerRadiusTopEnd="50dp"
+        app:boxCornerRadiusTopStart="50dp"
+        app:boxStrokeWidth="0dp">
 
-    <!-- EditText untuk Password -->
-    <EditText
-        android:id="@+id/passwor1"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone1"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pass_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="@string/masukan_password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:background="@drawable/rounded_edittext"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#A9A9A9"
-        android:layout_below="@id/labelPassword"
-        android:layout_marginTop="7dp" />
-    <TextView
-        android:id="@+id/labelKonfirPassword"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppinsbold"
-        android:text="@string/password"
-        android:textColor="#888888"
-        android:textSize="12sp"
-        android:layout_below="@id/passwor1"
-        android:layout_marginTop="12dp" />
-    <EditText
-        android:id="@+id/konfirpasswor1"
+        android:layout_below="@id/phone_layout"
+        android:hint="Kata Sandi"
+        android:layout_marginTop="16dp"
+        app:boxCornerRadiusBottomEnd="50dp"
+        app:boxCornerRadiusBottomStart="50dp"
+        app:boxCornerRadiusTopEnd="50dp"
+        app:boxCornerRadiusTopStart="50dp"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeWidth="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwor1"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/konfpass_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="@string/masukan_password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:background="@drawable/rounded_edittext"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#A9A9A9"
-        android:layout_below="@id/labelKonfirPassword"
-        android:layout_marginTop="7dp" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pass_layout"
+        android:hint="Konfirmasi Kata Sandi"
+        android:layout_marginTop="16dp"
+        app:boxCornerRadiusBottomEnd="50dp"
+        app:boxCornerRadiusBottomStart="50dp"
+        app:boxCornerRadiusTopEnd="50dp"
+        app:boxCornerRadiusTopStart="50dp"
+        app:passwordToggleEnabled="true"
+        app:boxStrokeWidth="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/konfirpasswor1"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Alternative Login Text -->
 
@@ -195,7 +184,7 @@
         android:textSize="12sp"
         android:textColor="#888888"
         android:fontFamily="@font/poppinsmedium"
-        android:layout_below="@id/konfirpasswor1"
+        android:layout_below="@id/konfpass_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
@@ -217,29 +206,12 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:background="@drawable/button_background"
             android:drawableLeft="@drawable/google"
             android:drawablePadding="8dp"
             android:paddingHorizontal="24dp"
             android:paddingVertical="12dp"
             android:text="@string/google"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            android:elevation="4dp" />
-
-        <!-- Tombol Facebook -->
-        <Button
-            android:id="@+id/Button4"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:drawableLeft="@drawable/facebook"
-            android:drawablePadding="8dp"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="12dp"
-            android:text="@string/facebook"
             android:textAllCaps="false"
             android:textColor="#000000"
             android:elevation="4dp" />

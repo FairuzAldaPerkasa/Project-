@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "280836102349",
+    "project_id": "melaut-app",
+    "storage_bucket": "melaut-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280836102349:android:af02e2763c3e40bc69f184",
+        "android_client_info": {
+          "package_name": "com.example.melautapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280836102349-l2oeutkb9g35i4g79l97qjofea8merul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.melautapp",
+            "certificate_hash": "cff612c09fe1d901085b52c1583bdfe2cba97c76"
+          }
+        },
+        {
+          "client_id": "280836102349-flmes716sh1142upp4b5l245dhlqskrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmMDTnrlcmDZeEE4SCqOEbTb_YAEWxGrs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280836102349-flmes716sh1142upp4b5l245dhlqskrf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

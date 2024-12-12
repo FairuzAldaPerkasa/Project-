@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.melautapp.R
+import com.example.melautapp.ui.register.LoginActivity
 import com.example.melautapp.ui.register.RegisterActivity
 
 class Onboarding3Fragment : Fragment() {
@@ -27,7 +28,7 @@ class Onboarding3Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         button = view.findViewById(R.id.continueButton)
         button.setOnClickListener{
-            val intent = Intent(activity, RegisterActivity::class.java)
+            val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
         }
     }
