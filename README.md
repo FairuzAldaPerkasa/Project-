@@ -13,7 +13,7 @@ Here is the initial project plan!
 -  Build the model to include factors such as fish species, fishing season, and sea conditions, and add a feature to allow you to share your experiences with our community coming soon feature.
 
 ## Installation
-Apk file for app installation can be found on our latest release [here](https://github.com/FairuzAldaPerkasa/Project-Capstone/releases/new), under the [releases](https://github.com/FairuzAldaPerkasa/Project-Capstone/releases/) section. Please beware that this app require permission to allow realtime location.
+Apk file for app installation can be found on our latest release [here](https://github.com/FairuzAldaPerkasa/Project-Capstone/releases/tag/v1.0.0), under the [releases](https://github.com/FairuzAldaPerkasa/Project-Capstone/releases/) section. Please beware that this app require permission to allow realtime location.
 
 ## App Demo
 ![Alt Text](linkyt)
