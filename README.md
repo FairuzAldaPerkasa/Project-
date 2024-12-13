@@ -31,7 +31,7 @@ Apk file for app installation can be found on our latest release [here](https://
 | ------ | ------ | ------ | ------ | ------ |
 | Fairuz Alda Perkasa  | M179B4KY1359  | https://github.com/FairuzAldaPerkasa | Doing data analysis and build algorithm for classification model based on rules as well as build the flask code to deploy the model | Done |
 | Made Vidyatma Adhi Krisna  | M297B4KY2375   | https://github.com/AdhiKrisna | Data merging, data cleaning, and train deep learning regression model to predict tidal value based on realtime weather data as well as doing fine tuning for that model | Done |
-| Rizqi Adi Bagus Wicaksono | M008B4KY3943   | link | Searching dataset sources as well as doing data gathering and give data normalization formula | Done |
+| Rizqi Adi Bagus Wicaksono | M008B4KY3943   | https://github.com/Kikik85 | Searching dataset sources as well as doing data gathering and give data normalization formula | Done |
 | Fara Azahwa | C179B4KX1392  | https://github.com/faraazahwa | Deploy backend Node JS, managing storage SQL Service and cloud bucket storage service | Done |
 | Selvie Purnama Dewi | C179B4KX4098  | https://github.com/sevinadewi | Build the node JS for the login and register backend. Build profile backend API. Get the realtime data weather API. Integrating the model from Machine Learning and deploy it  | Done |
 |  Intan Dewi Hapsari  | A179B4KX1984  | https://github.com/intandewihapsari | Build the main feature with retrofit as well as consume the model from CC's API. | Done |
